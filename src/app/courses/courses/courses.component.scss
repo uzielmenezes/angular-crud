@@ -1,3 +1,15 @@
+mat-card {
+  width: 80%;
+  margin: 2rem auto;
+  text-align: center;
+}
+
+.column-flex {
+  display: flex;
+  flex-flow: column nowrap;
+  min-width: 30rem;
+}
+
 .loading-spinner {
   background-color: rgba(0,0,0, 0.15);
   display: flex;
