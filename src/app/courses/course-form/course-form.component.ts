@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { NonNullableFormBuilder } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { CoursesService } from '../services/courses.service';
@@ -11,19 +11,17 @@ import { CoursesService } from '../services/courses.service';
   styleUrls: ['./course-form.component.scss'],
 })
 export class CourseFormComponent implements OnInit {
-  courseForm: FormGroup;
+  courseForm = this.fb.group({
+    name: [''],
+    category: [''],
+  });
 
   constructor(
-    private fb: FormBuilder,
+    private fb: NonNullableFormBuilder,
     private coursesService: CoursesService,
     private snackBar: MatSnackBar,
     private location: Location
-  ) {
-    this.courseForm = this.fb.group({
-      name: [null],
-      category: [null],
-    });
-  }
+  ) {}
 
   ngOnInit(): void {
     /* TODO document why this method 'ngOnInit' is empty */
