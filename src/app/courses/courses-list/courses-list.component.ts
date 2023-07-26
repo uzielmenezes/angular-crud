@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { Course } from '../courses/model/course';
+import { Course } from '../model/course';
 
 @Component({
   selector: 'courses-list',
@@ -12,8 +12,6 @@ export class CoursesListComponent {
   @Output() add = new EventEmitter(false);
 
   readonly displayedColumns = ['name', 'category', 'actions'];
-
-  constructor() {}
 
   onAdd() {
     this.add.emit(true);
