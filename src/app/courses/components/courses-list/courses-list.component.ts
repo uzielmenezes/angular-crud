@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { Course } from '../model/course';
+import { Course } from '../../model/course';
 
 @Component({
   selector: 'courses-list',
