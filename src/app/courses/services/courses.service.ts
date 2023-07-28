@@ -20,6 +20,10 @@ export class CoursesService {
     );
   }
 
+  loadById(id: string) {
+    return this.httpClient.get<Course>(`${this.API}/${id}`);
+  }
+
   save(course: Partial<Course>) {
     return this.httpClient.post<Course>(this.API, course).pipe(take(1));
   }
