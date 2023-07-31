@@ -1,8 +1,10 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { NonNullableFormBuilder } from '@angular/forms';
+import { FormGroup, NonNullableFormBuilder } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute } from '@angular/router';
 
+import { Course } from '../../model/course';
 import { CoursesService } from '../../services/courses.service';
 
 @Component({
@@ -11,20 +13,33 @@ import { CoursesService } from '../../services/courses.service';
   styleUrls: ['./course-form.component.scss'],
 })
 export class CourseFormComponent implements OnInit {
-  courseForm = this.fb.group({
-    name: [''],
-    category: [''],
-  });
+  courseForm!: FormGroup;
+
+  course!: Course;
 
   constructor(
     private fb: NonNullableFormBuilder,
     private coursesService: CoursesService,
     private snackBar: MatSnackBar,
-    private location: Location
+    private location: Location,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    /* TODO document why this method 'ngOnInit' is empty */
+    this.initializeForm();
+  }
+
+  initializeForm(): void {
+    this.getCourseFromRoute();
+    this.courseForm = this.fb.group({
+      id: [this.course._id],
+      name: [this.course.name],
+      category: [this.course.category],
+    });
+  }
+
+  private getCourseFromRoute(): void {
+    this.course = this.route.snapshot.data['course'];
   }
 
   onSubmit() {
