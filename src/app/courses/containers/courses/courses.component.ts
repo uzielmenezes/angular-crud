@@ -42,7 +42,7 @@ export class CoursesComponent {
   }
 
   onEdit(course: Course) {
-    this.router.navigate(['edit', course._id], {
+    this.router.navigate(['edit', course.id], {
       relativeTo: this.activatedRoute,
     });
   }

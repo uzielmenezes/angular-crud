@@ -32,7 +32,7 @@ export class CourseFormComponent implements OnInit {
   initializeForm(): void {
     this.getCourseFromRoute();
     this.courseForm = this.fb.group({
-      id: [this.course._id],
+      id: [this.course.id],
       name: [this.course.name],
       category: [this.course.category],
     });
@@ -44,8 +44,7 @@ export class CourseFormComponent implements OnInit {
 
   onSubmit() {
     this.coursesService.save(this.courseForm.value).subscribe({
-      next: (result) => {
-        console.log(result);
+      next: () => {
         this.onSuccess();
       },
       error: (_) => this.onError(),
