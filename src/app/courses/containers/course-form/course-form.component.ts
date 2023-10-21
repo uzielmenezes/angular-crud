@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, NonNullableFormBuilder } from '@angular/forms';
+import { FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 
@@ -29,12 +29,19 @@ export class CourseFormComponent implements OnInit {
     this.initializeForm();
   }
 
-  initializeForm(): void {
+  private initializeForm(): void {
     this.getCourseFromRoute();
     this.courseForm = this.fb.group({
       id: [this.course.id],
-      name: [this.course.name],
-      category: [this.course.category],
+      name: [
+        this.course.name,
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(50),
+        ],
+      ],
+      category: [this.course.category, [Validators.required]],
     });
   }
 
@@ -42,7 +49,16 @@ export class CourseFormComponent implements OnInit {
     this.course = this.route.snapshot.data['course'];
   }
 
-  onSubmit() {
+  public onSubmit() {
+    if (this.courseForm.invalid) {
+      this.courseForm.get('name')?.markAllAsTouched();
+      this.courseForm.get('category')?.markAllAsTouched();
+    } else {
+      this.saveCourse();
+    }
+  }
+
+  private saveCourse() {
     this.coursesService.save(this.courseForm.value).subscribe({
       next: () => {
         this.onSuccess();
@@ -64,7 +80,25 @@ export class CourseFormComponent implements OnInit {
     });
   }
 
-  onCancel() {
+  public onCancel() {
     this.location.back();
+  }
+
+  public getErrorMessage(fieldName: string) {
+    const field = this.courseForm.get(fieldName);
+
+    if (field?.hasError('required')) {
+      return 'Campo obrigatório!';
+    }
+
+    if (field?.hasError('minlength')) {
+      return 'Mínimo de 3 caracteres!';
+    }
+
+    if (field?.hasError('maxlength')) {
+      return 'Máximo de 50 caracteres!';
+    }
+
+    return 'Campo inválido!';
   }
 }
