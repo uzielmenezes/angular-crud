@@ -9,7 +9,7 @@ import {
   providedIn: 'root',
 })
 export class FormUtilsService {
-  validateAllFormFields(formGroup: UntypedFormGroup | UntypedFormArray) {
+  validateAllFormFields(formGroup: UntypedFormGroup | UntypedFormArray): void {
     Object.keys(formGroup.controls).forEach((field) => {
       const control = formGroup.get(field);
       if (control instanceof UntypedFormControl) {
@@ -24,12 +24,12 @@ export class FormUtilsService {
     });
   }
 
-  getErrorMessage(formGroup: UntypedFormGroup, fieldName: string) {
+  getErrorMessage(formGroup: UntypedFormGroup, fieldName: string): string {
     const field = formGroup.get(fieldName) as UntypedFormControl;
     return this.getErrorMessageFromField(field);
   }
 
-  getErrorMessageFromField(field: UntypedFormControl) {
+  getErrorMessageFromField(field: UntypedFormControl): string {
     if (field?.hasError('required')) {
       return 'Campo obrigatório';
     }
@@ -56,7 +56,7 @@ export class FormUtilsService {
     formArrayName: string,
     fieldName: string,
     index: number
-  ) {
+  ): string {
     const formArray = formGroup.get(formArrayName) as UntypedFormArray;
     const field = formArray.controls[index].get(
       fieldName
@@ -64,7 +64,10 @@ export class FormUtilsService {
     return this.getErrorMessageFromField(field);
   }
 
-  isFormArrayRequired(formGroup: UntypedFormGroup, formArrayName: string) {
+  isFormArrayRequired(
+    formGroup: UntypedFormGroup,
+    formArrayName: string
+  ): boolean {
     const formArray = formGroup.get(formArrayName) as UntypedFormArray;
     return (
       !formArray.valid && formArray.hasError('required') && formArray.touched
