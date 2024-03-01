@@ -9,7 +9,9 @@ import {
   providedIn: 'root',
 })
 export class FormUtilsService {
-  validateAllFormFields(formGroup: UntypedFormGroup | UntypedFormArray): void {
+  public validateAllFormFields(
+    formGroup: UntypedFormGroup | UntypedFormArray
+  ): void {
     Object.keys(formGroup.controls).forEach((field) => {
       const control = formGroup.get(field);
       if (control instanceof UntypedFormControl) {
@@ -24,12 +26,15 @@ export class FormUtilsService {
     });
   }
 
-  getErrorMessage(formGroup: UntypedFormGroup, fieldName: string): string {
+  public getErrorMessage(
+    formGroup: UntypedFormGroup,
+    fieldName: string
+  ): string {
     const field = formGroup.get(fieldName) as UntypedFormControl;
     return this.getErrorMessageFromField(field);
   }
 
-  getErrorMessageFromField(field: UntypedFormControl): string {
+  public getErrorMessageFromField(field: UntypedFormControl): string {
     if (field?.hasError('required')) {
       return 'Campo obrigatório';
     }
@@ -51,7 +56,7 @@ export class FormUtilsService {
     return 'Campo Inválido';
   }
 
-  getFormArrayFieldErrorMessage(
+  public getFormArrayFieldErrorMessage(
     formGroup: UntypedFormGroup,
     formArrayName: string,
     fieldName: string,
@@ -64,7 +69,7 @@ export class FormUtilsService {
     return this.getErrorMessageFromField(field);
   }
 
-  isFormArrayRequired(
+  public isFormArrayRequired(
     formGroup: UntypedFormGroup,
     formArrayName: string
   ): boolean {
