@@ -14,7 +14,7 @@
           {{ inputCourseName.value.length || 0 }} / 50</mat-hint
         >
         <mat-error *ngIf="courseForm.get('name')?.invalid">{{
-          getErrorMessage("name")
+          formUtils.getErrorMessage(courseForm, "name")
         }}</mat-error>
       </mat-form-field>
 
@@ -25,7 +25,7 @@
           <mat-option value="Back-End">Back-End</mat-option>
         </mat-select>
         <mat-error *ngIf="courseForm.get('category')?.invalid">{{
-          getErrorMessage("category")
+          formUtils.getErrorMessage(courseForm, "category")
         }}</mat-error>
       </mat-form-field>
 
@@ -36,9 +36,11 @@
         </button></mat-toolbar
       >
 
-      <mat-error class="error-msg" *ngIf="isFormArrayRequired">{{
-        getErrorMessage("lessons")
-      }}</mat-error>
+      <mat-error
+        class="error-msg"
+        *ngIf="formUtils.isFormArrayRequired(courseForm, 'lessons')"
+        >Adicione pelo menos uma aula.</mat-error
+      >
 
       <table
         class="lessons-table"
@@ -54,7 +56,12 @@
                 {{ inputLessonName.value.length || 0 }} / 100</mat-hint
               >
               <mat-error *ngIf="getLessonsFormArray[i].get('name')?.invalid">{{
-                getErrorMessage("category")
+                formUtils.getFormArrayFieldErrorMessage(
+                  courseForm,
+                  "lessons",
+                  "name",
+                  i
+                )
               }}</mat-error>
             </mat-form-field>
           </td>
@@ -68,7 +75,14 @@
               >
               <mat-error
                 *ngIf="getLessonsFormArray[i].get('youtubeUrl')?.invalid"
-                >{{ getErrorMessage("category") }}</mat-error
+                >{{
+                  formUtils.getFormArrayFieldErrorMessage(
+                    courseForm,
+                    "lessons",
+                    "youtubeUrl",
+                    i
+                  )
+                }}</mat-error
               >
             </mat-form-field>
           </td>

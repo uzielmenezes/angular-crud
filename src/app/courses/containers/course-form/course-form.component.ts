@@ -11,6 +11,7 @@ import {
 } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
+import { FormUtilsService } from 'src/app/shared/form/form-utils.service';
 
 import { Course } from '../../model/course';
 import { Lesson } from '../../model/lesson';
@@ -28,13 +29,6 @@ type LessonForm = {
   name: FormControl<string>;
   youtubeUrl: FormControl<string>;
 };
-
-enum InvalidErrorMessage {
-  Required = 'Campo obrigatório!',
-  MinLength = 'Mínimo de 3 caracteres!',
-  MaxLength = 'Máximo de 50 caracteres!',
-  Default = 'Campo inválido!',
-}
 
 enum SnackBarMessage {
   Success = 'Curso salvo com sucesso.',
@@ -56,7 +50,8 @@ export class CourseFormComponent implements OnInit {
     private coursesService: CoursesService,
     private snackBar: MatSnackBar,
     private location: Location,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public formUtils: FormUtilsService
   ) {}
 
   ngOnInit(): void {
@@ -127,9 +122,7 @@ export class CourseFormComponent implements OnInit {
 
   public onSubmit(): void {
     if (this.courseForm.invalid) {
-      this.courseForm.get('name')?.markAllAsTouched();
-      this.courseForm.get('category')?.markAllAsTouched();
-      this.courseForm.get('lessons')?.markAsTouched();
+      this.formUtils.validateAllFormFields(this.courseForm);
     } else {
       this.saveCourse();
     }
@@ -169,28 +162,5 @@ export class CourseFormComponent implements OnInit {
   public removeLesson(lessonIndex: number): void {
     const lessons = this.courseForm.get('lessons') as UntypedFormArray;
     lessons.removeAt(lessonIndex);
-  }
-
-  public getErrorMessage(fieldName: string): InvalidErrorMessage {
-    const field = this.courseForm.get(fieldName);
-
-    if (field?.hasError('required')) {
-      return InvalidErrorMessage.Required;
-    }
-
-    if (field?.hasError('minlength')) {
-      return InvalidErrorMessage.MinLength;
-    }
-
-    if (field?.hasError('maxlength')) {
-      return InvalidErrorMessage.MaxLength;
-    }
-
-    return InvalidErrorMessage.Default;
-  }
-
-  public get isFormArrayRequired(): boolean {
-    const lessons = this.courseForm.get('lessons') as UntypedFormArray;
-    return !lessons.valid && lessons.hasError('required') && lessons.touched;
   }
 }
