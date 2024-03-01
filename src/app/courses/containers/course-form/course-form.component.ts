@@ -2,6 +2,8 @@ import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
   AbstractControl,
+  FormArray,
+  FormControl,
   FormGroup,
   NonNullableFormBuilder,
   UntypedFormArray,
@@ -13,6 +15,19 @@ import { ActivatedRoute } from '@angular/router';
 import { Course } from '../../model/course';
 import { Lesson } from '../../model/lesson';
 import { CoursesService } from '../../services/courses.service';
+
+type CourseForm = {
+  id: FormControl<string>;
+  name: FormControl<string>;
+  category: FormControl<string>;
+  lessons: FormArray<FormGroup<any>>;
+};
+
+type LessonForm = {
+  id: FormControl<string>;
+  name: FormControl<string>;
+  youtubeUrl: FormControl<string>;
+};
 
 enum InvalidErrorMessage {
   Required = 'Campo obrigatório!',
@@ -32,7 +47,7 @@ enum SnackBarMessage {
   styleUrls: ['./course-form.component.scss'],
 })
 export class CourseFormComponent implements OnInit {
-  courseForm!: FormGroup;
+  courseForm!: FormGroup<CourseForm>;
 
   course!: Course;
 
@@ -69,7 +84,7 @@ export class CourseFormComponent implements OnInit {
     this.course = this.route.snapshot.data['course'];
   }
 
-  private getLessons(course: Course): FormGroup[] {
+  private getLessons(course: Course): FormGroup<LessonForm>[] {
     const lessons = [];
 
     if (course?.lessons) {
@@ -84,7 +99,7 @@ export class CourseFormComponent implements OnInit {
 
   private createLesoon(
     lesson: Lesson = { id: '', name: '', youtubeUrl: '' }
-  ): FormGroup {
+  ): FormGroup<LessonForm> {
     return this.fb.group({
       id: [lesson.id],
       name: [
