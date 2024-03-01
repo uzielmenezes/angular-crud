@@ -25,11 +25,16 @@ type LessonForm = {
   youtubeUrl: FormControl<string>;
 };
 
-enum ErrorMessage {
+enum InvalidErrorMessage {
   Required = 'Campo obrigatório!',
   MinLength = 'Mínimo de 3 caracteres!',
   MaxLength = 'Máximo de 50 caracteres!',
   Default = 'Campo inválido!',
+}
+
+enum SnackBarMessage {
+  Success = 'Curso salvo com sucesso.',
+  Error = 'Erro ao salvar curso.',
 }
 
 @Component({
@@ -116,14 +121,14 @@ export class CourseFormComponent implements OnInit {
   }
 
   private onSuccess(): void {
-    this.snackBar.open('Curso salvo com sucesso.', '', {
+    this.snackBar.open(SnackBarMessage.Success, '', {
       duration: 3000,
     });
     this.onCancel();
   }
 
   private onError(): void {
-    this.snackBar.open('Erro ao salvar curso.', '', {
+    this.snackBar.open(SnackBarMessage.Error, '', {
       duration: 3000,
     });
   }
@@ -132,21 +137,21 @@ export class CourseFormComponent implements OnInit {
     this.location.back();
   }
 
-  public getErrorMessage(fieldName: string): ErrorMessage {
+  public getErrorMessage(fieldName: string): InvalidErrorMessage {
     const field = this.courseForm.get(fieldName);
 
     if (field?.hasError('required')) {
-      return ErrorMessage.Required;
+      return InvalidErrorMessage.Required;
     }
 
     if (field?.hasError('minlength')) {
-      return ErrorMessage.MinLength;
+      return InvalidErrorMessage.MinLength;
     }
 
     if (field?.hasError('maxlength')) {
-      return ErrorMessage.MaxLength;
+      return InvalidErrorMessage.MaxLength;
     }
 
-    return ErrorMessage.Default;
+    return InvalidErrorMessage.Default;
   }
 }
