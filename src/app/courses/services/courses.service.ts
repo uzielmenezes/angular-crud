@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { delay, take } from 'rxjs';
+import { delay, Observable, take } from 'rxjs';
 
 import { Course } from '../model/course';
 
@@ -12,19 +12,19 @@ export class CoursesService {
 
   constructor(private httpClient: HttpClient) {}
 
-  list() {
+  list(): Observable<Course[]> {
     return this.httpClient.get<Course[]>(this.API).pipe(take(1), delay(500));
   }
 
-  loadById(id: string) {
+  loadById(id: string): Observable<Course> {
     return this.httpClient.get<Course>(`${this.API}/${id}`);
   }
 
-  save(course: Partial<Course>) {
+  save(course: Partial<Course>): Observable<Course> {
     return this.saveOrUpdate(course);
   }
 
-  private saveOrUpdate(course: Partial<Course>) {
+  private saveOrUpdate(course: Partial<Course>): Observable<Course> {
     if (course.id) {
       return this.update(course);
     } else {
@@ -32,17 +32,17 @@ export class CoursesService {
     }
   }
 
-  private create(course: Partial<Course>) {
+  private create(course: Partial<Course>): Observable<Course> {
     return this.httpClient.post<Course>(this.API, course).pipe(take(1));
   }
 
-  private update(course: Partial<Course>) {
+  private update(course: Partial<Course>): Observable<Course> {
     return this.httpClient
       .put<Course>(`${this.API}/${course.id}`, course)
       .pipe(take(1));
   }
 
-  public remove(courseId: string) {
+  public remove(courseId: string): Observable<void> {
     return this.httpClient
       .delete<void>(`${this.API}/${courseId}`)
       .pipe(take(1));
