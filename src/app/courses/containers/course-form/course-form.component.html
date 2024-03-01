@@ -23,8 +23,8 @@
       </mat-form-field>
 
       <mat-toolbar
-        ><span>Lessons</span>
-        <button mat-icon-button color="accent">
+        ><span>Aulas</span>
+        <button mat-icon-button color="accent" (click)="addNewLesson()">
           <mat-icon aria-label="Add a new lesson">add</mat-icon>
         </button></mat-toolbar
       >
@@ -37,7 +37,7 @@
         <tr [formGroupName]="i">
           <td style="width: 65%">
             <mat-form-field class="full-width">
-              <mat-label>Name</mat-label>
+              <mat-label>Nome da Aula</mat-label>
               <input matInput formControlName="name" />
             </mat-form-field>
           </td>
@@ -47,6 +47,11 @@
               <mat-label>URL</mat-label>
               <input matInput formControlName="youtubeUrl" />
             </mat-form-field>
+          </td>
+          <td>
+            <button mat-icon-button color="warn" (click)="removeLesson(i)">
+              <mat-icon aria-label="Delete a lesson">delete</mat-icon>
+            </button>
           </td>
         </tr>
       </table>
