@@ -17,3 +17,23 @@
   width: 100%;
   min-width: 30rem;
 }
+
+.error-msg {
+  text-align: left;
+}
+
+.lessons-table {
+  width: 100%;
+
+  td:nth-child(1) {
+    width: 60%;
+  }
+
+  td:nth-child(2) {
+    width: 30%;
+  }
+
+  td:nth-child(3) {
+    width: 10%;
+  }
+}
