@@ -131,6 +131,16 @@ export class CourseFormComponent implements OnInit {
     this.location.back();
   }
 
+  public addNewLesson(): void {
+    const lessons = this.courseForm.get('lessons') as UntypedFormArray;
+    lessons.push(this.createLesoon());
+  }
+
+  public removeLesson(lessonIndex: number): void {
+    const lessons = this.courseForm.get('lessons') as UntypedFormArray;
+    lessons.removeAt(lessonIndex);
+  }
+
   public getErrorMessage(fieldName: string): InvalidErrorMessage {
     const field = this.courseForm.get(fieldName);
 
