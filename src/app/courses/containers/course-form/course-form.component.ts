@@ -1,9 +1,10 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
-  FormControl,
+  AbstractControl,
   FormGroup,
   NonNullableFormBuilder,
+  UntypedFormArray,
   Validators,
 } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -12,18 +13,6 @@ import { ActivatedRoute } from '@angular/router';
 import { Course } from '../../model/course';
 import { Lesson } from '../../model/lesson';
 import { CoursesService } from '../../services/courses.service';
-
-type CourseForm = {
-  id: FormControl<string>;
-  name: FormControl<string>;
-  category: FormControl<string>;
-};
-
-type LessonForm = {
-  id: FormControl<string>;
-  name: FormControl<string>;
-  youtubeUrl: FormControl<string>;
-};
 
 enum InvalidErrorMessage {
   Required = 'Campo obrigatório!',
@@ -43,7 +32,7 @@ enum SnackBarMessage {
   styleUrls: ['./course-form.component.scss'],
 })
 export class CourseFormComponent implements OnInit {
-  courseForm!: FormGroup<CourseForm>;
+  courseForm!: FormGroup;
 
   course!: Course;
 
@@ -72,6 +61,7 @@ export class CourseFormComponent implements OnInit {
         ],
       ],
       category: [this.course.category, [Validators.required]],
+      lessons: this.fb.array(this.getLessons(this.course), Validators.required),
     });
   }
 
@@ -79,7 +69,7 @@ export class CourseFormComponent implements OnInit {
     this.course = this.route.snapshot.data['course'];
   }
 
-  private getLessons(course: Course): FormGroup<LessonForm>[] {
+  private getLessons(course: Course): FormGroup[] {
     const lessons = [];
 
     if (course?.lessons) {
@@ -94,12 +84,16 @@ export class CourseFormComponent implements OnInit {
 
   private createLesoon(
     lesson: Lesson = { id: '', name: '', youtubeUrl: '' }
-  ): FormGroup<LessonForm> {
+  ): FormGroup {
     return this.fb.group({
       id: [lesson.id],
       name: [lesson.name],
       youtubeUrl: [lesson.youtubeUrl],
     });
+  }
+
+  public get getLessonsFormArray(): AbstractControl<any, any>[] {
+    return (<UntypedFormArray>this.courseForm.get('lessons')).controls;
   }
 
   public onSubmit(): void {
