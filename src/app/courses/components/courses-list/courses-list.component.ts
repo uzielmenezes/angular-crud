@@ -18,15 +18,15 @@ export class CoursesListComponent {
 
   readonly displayedColumns = ['name', 'category', 'actions'];
 
-  onAdd() {
+  onAdd(): void {
     this.add.emit(true);
   }
 
-  onEdit(course: Course) {
+  onEdit(course: Course): void {
     this.edit.emit(course);
   }
 
-  onDelete(course: Course) {
+  onDelete(course: Course): void {
     this.delete.emit(course);
   }
 }
