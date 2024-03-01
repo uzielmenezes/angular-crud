@@ -87,8 +87,22 @@ export class CourseFormComponent implements OnInit {
   ): FormGroup {
     return this.fb.group({
       id: [lesson.id],
-      name: [lesson.name],
-      youtubeUrl: [lesson.youtubeUrl],
+      name: [
+        lesson.name,
+        [
+          Validators.required,
+          Validators.minLength(5),
+          Validators.maxLength(100),
+        ],
+      ],
+      youtubeUrl: [
+        lesson.youtubeUrl,
+        [
+          Validators.required,
+          Validators.minLength(10),
+          Validators.maxLength(11),
+        ],
+      ],
     });
   }
 
@@ -100,6 +114,7 @@ export class CourseFormComponent implements OnInit {
     if (this.courseForm.invalid) {
       this.courseForm.get('name')?.markAllAsTouched();
       this.courseForm.get('category')?.markAllAsTouched();
+      this.courseForm.get('lessons')?.markAsTouched();
     } else {
       this.saveCourse();
     }
@@ -157,5 +172,10 @@ export class CourseFormComponent implements OnInit {
     }
 
     return InvalidErrorMessage.Default;
+  }
+
+  public get isFormArrayRequired(): boolean {
+    const lessons = this.courseForm.get('lessons') as UntypedFormArray;
+    return !lessons.valid && lessons.hasError('required') && lessons.touched;
   }
 }
