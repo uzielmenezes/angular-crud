@@ -15,7 +15,9 @@ export class CourseResolver {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<Course> {
-    if (route?.params && route.params['id']) {
+    const hasIdParams = route?.params?.['id'];
+
+    if (hasIdParams) {
       return this.coursesService.loadById(route.params['id']);
     }
     return of({ id: '', name: '', category: '', lessons: [] });
