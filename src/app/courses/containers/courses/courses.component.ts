@@ -1,12 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { catchError, Observable, of } from 'rxjs';
+import { catchError, Observable, of, tap } from 'rxjs';
 import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
 import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component';
 
 import { Course } from '../../model/course';
+import { CoursePage } from '../../model/course-page';
 import { CoursesService } from '../../services/courses.service';
 
 enum MessageToShow {
@@ -22,7 +24,12 @@ enum MessageToShow {
   styleUrls: ['./courses.component.scss'],
 })
 export class CoursesComponent {
-  courses$!: Observable<Course[]>;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  coursePage$!: Observable<CoursePage>;
+
+  pageIndex: number = 0;
+  pageSize: number = 10;
 
   displayedColumns = ['name', 'category', 'actions'];
 
@@ -36,13 +43,21 @@ export class CoursesComponent {
     this.refresh();
   }
 
-  private refresh(): void {
-    this.courses$ = this.coursesService.list().pipe(
-      catchError((error) => {
-        this.onError(MessageToShow.OnCoursesFetchError);
-        return of([]);
-      })
-    );
+  public refresh(
+    pageEvent: PageEvent = { length: 0, pageIndex: 0, pageSize: 10 }
+  ): void {
+    this.coursePage$ = this.coursesService
+      .list(pageEvent.pageIndex, pageEvent.pageSize)
+      .pipe(
+        tap(() => {
+          this.pageIndex = pageEvent.pageIndex;
+          this.pageSize = pageEvent.pageSize;
+        }),
+        catchError((error) => {
+          this.onError(MessageToShow.OnCoursesFetchError);
+          return of({ courses: [], totalElements: 0, totalPages: 0 });
+        })
+      );
   }
 
   onError(errorMsg: string): void {
