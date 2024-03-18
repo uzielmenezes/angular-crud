@@ -1,4 +1,4 @@
-import { Location, NgIf, NgFor } from '@angular/common';
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormControl, FormGroup, NonNullableFormBuilder, UntypedFormArray, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -41,25 +41,23 @@ enum SnackBarMessage {
     styleUrls: ['./course-form.component.scss'],
     standalone: true,
     imports: [
-        MatCard,
-        MatToolbar,
-        MatCardContent,
-        ReactiveFormsModule,
-        MatFormField,
-        MatInput,
-        MatHint,
-        NgIf,
-        MatError,
-        MatLabel,
-        MatSelect,
-        MatOption,
-        MatIconButton,
-        MatIcon,
-        NgFor,
-        MatPrefix,
-        MatCardActions,
-        MatButton,
-    ],
+    MatCard,
+    MatToolbar,
+    MatCardContent,
+    ReactiveFormsModule,
+    MatFormField,
+    MatInput,
+    MatHint,
+    MatError,
+    MatLabel,
+    MatSelect,
+    MatOption,
+    MatIconButton,
+    MatIcon,
+    MatPrefix,
+    MatCardActions,
+    MatButton
+],
 })
 export class CourseFormComponent implements OnInit {
   courseForm!: FormGroup<CourseForm>;

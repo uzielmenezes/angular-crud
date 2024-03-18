@@ -12,7 +12,7 @@ import { CoursePage } from '../../model/course-page';
 import { CoursesService } from '../../services/courses.service';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { CoursesListComponent } from '../../components/courses-list/courses-list.component';
-import { NgIf, AsyncPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { MatToolbar } from '@angular/material/toolbar';
 import { MatCard, MatCardContent } from '@angular/material/card';
 
@@ -29,15 +29,14 @@ enum MessageToShow {
     styleUrls: ['./courses.component.scss'],
     standalone: true,
     imports: [
-        MatCard,
-        MatCardContent,
-        MatToolbar,
-        NgIf,
-        CoursesListComponent,
-        MatPaginator,
-        MatProgressSpinner,
-        AsyncPipe,
-    ],
+    MatCard,
+    MatCardContent,
+    MatToolbar,
+    CoursesListComponent,
+    MatPaginator,
+    MatProgressSpinner,
+    AsyncPipe
+],
 })
 export class CoursesComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
