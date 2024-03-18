@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { delay, Observable, take } from 'rxjs';
 
 import { Course } from '../model/course';
+import { CoursePage } from '../model/course-page';
 
 @Injectable({
   providedIn: 'root',
@@ -12,8 +13,10 @@ export class CoursesService {
 
   constructor(private httpClient: HttpClient) {}
 
-  list(): Observable<Course[]> {
-    return this.httpClient.get<Course[]>(this.API).pipe(take(1), delay(500));
+  list(page = 0, pageSize = 10): Observable<CoursePage> {
+    return this.httpClient
+      .get<CoursePage>(this.API, { params: { page, pageSize } })
+      .pipe(take(1), delay(500));
   }
 
   loadById(id: string): Observable<Course> {
