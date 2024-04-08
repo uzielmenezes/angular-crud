@@ -1,20 +1,20 @@
+import { AsyncPipe } from '@angular/common';
 import { Component, ViewChild } from '@angular/core';
+import { MatCard, MatCardContent } from '@angular/material/card';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatToolbar } from '@angular/material/toolbar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, Observable, of, tap } from 'rxjs';
 import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
 import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component';
 
+import { CoursesListComponent } from '../../components/courses-list/courses-list.component';
 import { Course } from '../../model/course';
 import { CoursePage } from '../../model/course-page';
 import { CoursesService } from '../../services/courses.service';
-import { MatProgressSpinner } from '@angular/material/progress-spinner';
-import { CoursesListComponent } from '../../components/courses-list/courses-list.component';
-import { AsyncPipe } from '@angular/common';
-import { MatToolbar } from '@angular/material/toolbar';
-import { MatCard, MatCardContent } from '@angular/material/card';
 
 enum MessageToShow {
   OnDeleteSuccess = 'Curso removido com sucesso!',
@@ -24,19 +24,19 @@ enum MessageToShow {
 }
 
 @Component({
-    selector: 'app-courses',
-    templateUrl: './courses.component.html',
-    styleUrls: ['./courses.component.scss'],
-    standalone: true,
-    imports: [
+  selector: 'app-courses',
+  templateUrl: './courses.component.html',
+  styleUrls: ['./courses.component.scss'],
+  standalone: true,
+  imports: [
     MatCard,
     MatCardContent,
     MatToolbar,
     CoursesListComponent,
     MatPaginator,
     MatProgressSpinner,
-    AsyncPipe
-],
+    AsyncPipe,
+  ],
 })
 export class CoursesComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -109,6 +109,12 @@ export class CoursesComponent {
           },
         });
       }
+    });
+  }
+
+  onView(course: Course) {
+    this.router.navigate(['view', course.id], {
+      relativeTo: this.activatedRoute,
     });
   }
 
