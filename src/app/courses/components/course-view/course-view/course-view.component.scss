@@ -1,0 +1,28 @@
+.example-container {
+  position: absolute;
+  top: 6rem;
+  bottom: 6rem;
+  left: 0;
+  right: 0;
+}
+
+.example-sidenav-content {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.example-sidenav {
+  padding: 2rem;
+}
+
+.list-with-border {
+  border: .1rem solid #f2f2f2;
+}
+
+.selected-lesson {
+  font-style: italic;
+  font-weight: bold !important;
+  background-color: whitesmoke;
+}
