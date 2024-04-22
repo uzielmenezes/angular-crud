@@ -3,7 +3,7 @@ import { Routes } from '@angular/router';
 import { CourseViewComponent } from './components/course-view/course-view/course-view.component';
 import { CourseFormComponent } from './containers/course-form/course-form.component';
 import { CoursesComponent } from './containers/courses/courses.component';
-import { CourseResolver } from './guards/course.resolver';
+import { CourseResolver } from './resolver/course.resolver';
 
 export const COURSES_ROUTES: Routes = [
   { path: '', component: CoursesComponent },
