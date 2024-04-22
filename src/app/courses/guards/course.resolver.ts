@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable, of } from 'rxjs';
 
 import { Course } from '../model/course';
@@ -11,10 +11,7 @@ import { CoursesService } from '../services/courses.service';
 export class CourseResolver {
   constructor(private readonly coursesService: CoursesService) {}
 
-  resolve(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): Observable<Course> {
+  resolve(route: ActivatedRouteSnapshot): Observable<Course> {
     const hasIdParams = route?.params?.['id'];
 
     if (hasIdParams) {
