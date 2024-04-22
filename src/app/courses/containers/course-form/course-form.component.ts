@@ -1,21 +1,40 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormArray, FormControl, FormGroup, NonNullableFormBuilder, UntypedFormArray, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  AbstractControl,
+  FormArray,
+  FormControl,
+  FormGroup,
+  NonNullableFormBuilder,
+  ReactiveFormsModule,
+  UntypedFormArray,
+  Validators,
+} from '@angular/forms';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import {
+  MatCard,
+  MatCardActions,
+  MatCardContent,
+} from '@angular/material/card';
+import { MatOption } from '@angular/material/core';
+import {
+  MatError,
+  MatFormField,
+  MatHint,
+  MatLabel,
+  MatPrefix,
+} from '@angular/material/form-field';
+import { MatIcon } from '@angular/material/icon';
+import { MatInput } from '@angular/material/input';
+import { MatSelect } from '@angular/material/select';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatToolbar } from '@angular/material/toolbar';
 import { ActivatedRoute } from '@angular/router';
 import { FormUtilsService } from 'src/app/shared/form/form-utils.service';
 
 import { Course } from '../../model/course';
 import { Lesson } from '../../model/lesson';
 import { CoursesService } from '../../services/courses.service';
-import { MatIcon } from '@angular/material/icon';
-import { MatIconButton, MatButton } from '@angular/material/button';
-import { MatOption } from '@angular/material/core';
-import { MatSelect } from '@angular/material/select';
-import { MatInput } from '@angular/material/input';
-import { MatFormField, MatHint, MatError, MatLabel, MatPrefix } from '@angular/material/form-field';
-import { MatToolbar } from '@angular/material/toolbar';
-import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
 
 type CourseForm = {
   id: FormControl<string>;
@@ -36,11 +55,11 @@ enum SnackBarMessage {
 }
 
 @Component({
-    selector: 'app-course-form',
-    templateUrl: './course-form.component.html',
-    styleUrls: ['./course-form.component.scss'],
-    standalone: true,
-    imports: [
+  selector: 'app-course-form',
+  templateUrl: './course-form.component.html',
+  styleUrls: ['./course-form.component.scss'],
+  standalone: true,
+  imports: [
     MatCard,
     MatToolbar,
     MatCardContent,
@@ -56,8 +75,8 @@ enum SnackBarMessage {
     MatIcon,
     MatPrefix,
     MatCardActions,
-    MatButton
-],
+    MatButton,
+  ],
 })
 export class CourseFormComponent implements OnInit {
   courseForm!: FormGroup<CourseForm>;
@@ -135,11 +154,11 @@ export class CourseFormComponent implements OnInit {
     });
   }
 
-  public get getLessonsFormArray(): AbstractControl<any, any>[] {
+  get getLessonsFormArray(): AbstractControl<any, any>[] {
     return (<UntypedFormArray>this.courseForm.get('lessons')).controls;
   }
 
-  public onSubmit(): void {
+  onSubmit(): void {
     if (this.courseForm.invalid) {
       this.formUtils.validateAllFormFields(this.courseForm);
     } else {
@@ -169,16 +188,16 @@ export class CourseFormComponent implements OnInit {
     });
   }
 
-  public onCancel(): void {
+  onCancel(): void {
     this.location.back();
   }
 
-  public addNewLesson(): void {
+  addNewLesson(): void {
     const lessons = this.courseForm.get('lessons') as UntypedFormArray;
     lessons.push(this.createLesoon());
   }
 
-  public removeLesson(lessonIndex: number): void {
+  removeLesson(lessonIndex: number): void {
     const lessons = this.courseForm.get('lessons') as UntypedFormArray;
     lessons.removeAt(lessonIndex);
   }

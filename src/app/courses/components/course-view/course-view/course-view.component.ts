@@ -55,7 +55,7 @@ export class CourseViewComponent implements OnInit, AfterViewInit {
     window.addEventListener('resize', this.onResize.bind(this));
   }
 
-  onResize(): void {
+  private onResize(): void {
     this.videoWidth = this.youtubePlayer.nativeElement.clientWidth * 0.9;
     this.videoHeight = this.videoWidth * 0.6;
     this.cd.detectChanges();

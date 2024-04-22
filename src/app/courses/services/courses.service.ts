@@ -45,7 +45,7 @@ export class CoursesService {
       .pipe(take(1));
   }
 
-  public remove(courseId: string): Observable<void> {
+  remove(courseId: string): Observable<void> {
     return this.httpClient
       .delete<void>(`${this.API}/${courseId}`)
       .pipe(take(1));

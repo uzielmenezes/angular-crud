@@ -58,7 +58,7 @@ export class CoursesComponent {
     this.refresh();
   }
 
-  public refresh(
+  refresh(
     pageEvent: PageEvent = { length: 0, pageIndex: 0, pageSize: 10 }
   ): void {
     this.coursePage$ = this.coursesService
@@ -75,7 +75,7 @@ export class CoursesComponent {
       );
   }
 
-  onError(errorMsg: string): void {
+  private onError(errorMsg: string): void {
     this.dialog.open(ErrorDialogComponent, {
       data: errorMsg,
     });
@@ -112,17 +112,17 @@ export class CoursesComponent {
     });
   }
 
-  onView(course: Course) {
-    this.router.navigate(['view', course.id], {
-      relativeTo: this.activatedRoute,
-    });
-  }
-
   private onSuccess(successMsg: string) {
     this.snackBar.open(successMsg, 'X', {
       duration: 5000,
       verticalPosition: 'top',
       horizontalPosition: 'center',
+    });
+  }
+
+  onView(course: Course) {
+    this.router.navigate(['view', course.id], {
+      relativeTo: this.activatedRoute,
     });
   }
 }
