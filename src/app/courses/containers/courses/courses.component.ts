@@ -45,6 +45,7 @@ export class CoursesComponent {
 
   pageIndex: number = 0;
   pageSize: number = 10;
+  pageSizeOptions: number[] = [5];
 
   displayedColumns = ['name', 'category', 'actions'];
 
@@ -59,20 +60,32 @@ export class CoursesComponent {
   }
 
   refresh(
-    pageEvent: PageEvent = { length: 0, pageIndex: 0, pageSize: 10 }
+    pageEvent: PageEvent = { length: 0, pageIndex: 0, pageSize: 5 }
   ): void {
     this.coursePage$ = this.coursesService
       .list(pageEvent.pageIndex, pageEvent.pageSize)
       .pipe(
-        tap(() => {
+        tap((result) => {
           this.pageIndex = pageEvent.pageIndex;
           this.pageSize = pageEvent.pageSize;
+          this.pageSizeOptions = this.getMultiplesOf5(result.totalElements);
         }),
         catchError((error) => {
           this.onError(MessageToShow.OnCoursesFetchError);
           return of({ courses: [], totalElements: 0, totalPages: 0 });
         })
       );
+  }
+
+  private getMultiplesOf5(value: number): number[] {
+    const multiples = [];
+    const maxMultiple = 20;
+    for (let i = 1; i <= value; i++) {
+      if (i % 5 === 0 && i <= maxMultiple) {
+        multiples.push(i);
+      }
+    }
+    return multiples;
   }
 
   private onError(errorMsg: string): void {

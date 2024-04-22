@@ -12,7 +12,7 @@
         (view)="onView($event)"
       ></courses-list>
       <mat-paginator
-        [pageSizeOptions]="[5, 10, 15]"
+        [pageSizeOptions]="pageSizeOptions"
         [pageIndex]="pageIndex"
         [pageSize]="pageSize"
         [length]="coursePage.totalElements"
