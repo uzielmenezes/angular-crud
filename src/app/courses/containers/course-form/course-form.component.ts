@@ -30,7 +30,7 @@ import { MatSelect } from '@angular/material/select';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatToolbar } from '@angular/material/toolbar';
 import { ActivatedRoute } from '@angular/router';
-import { FormUtilsService } from 'src/app/shared/form/form-utils.service';
+import { FormUtilsService } from 'src/app/shared/services/form-utils/form-utils.service';
 
 import { Course } from '../../model/course';
 import { Lesson } from '../../model/lesson';
