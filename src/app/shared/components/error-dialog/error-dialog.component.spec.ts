@@ -43,7 +43,7 @@ describe('ErrorDialogComponent', () => {
     );
     expect(errorMessageDom.textContent).toContain('Error message test.');
 
-    const okBtn = fixture.nativeElement.querySelector('button');
-    expect(okBtn.textContent).toContain('Fechar');
+    const closeBtn = fixture.nativeElement.querySelector('button');
+    expect(closeBtn.textContent).toContain('Fechar');
   });
 });
