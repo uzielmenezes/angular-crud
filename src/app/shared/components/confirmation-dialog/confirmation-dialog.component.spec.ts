@@ -17,19 +17,11 @@ fdescribe('ConfirmationDialogComponent', () => {
     TestBed.configureTestingModule({
       imports: [MatDialogModule, ConfirmationDialogComponent],
       providers: [
-        {
-          provide: MatDialogRef,
-          useValue: { matDialogRefMock },
-        },
-        {
-          provide: MAT_DIALOG_DATA,
-          useValue: 'Confirmation message test.',
-        },
+        { provide: MAT_DIALOG_DATA, useValue: 'Confirmation message test.' },
+        { provide: MatDialogRef, useValue: matDialogRefMock },
       ],
     }).compileComponents();
-  });
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(ConfirmationDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
