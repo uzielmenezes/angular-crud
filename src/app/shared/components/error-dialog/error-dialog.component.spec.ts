@@ -7,7 +7,7 @@ import {
 
 import { ErrorDialogComponent } from './error-dialog.component';
 
-fdescribe('ErrorDialogComponent', () => {
+describe('ErrorDialogComponent', () => {
   let component: ErrorDialogComponent;
   let fixture: ComponentFixture<ErrorDialogComponent>;
 
