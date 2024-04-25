@@ -1,11 +1,14 @@
 import { TestBed } from '@angular/core/testing';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { provideRouter } from '@angular/router';
 
 import { AppComponent } from './app.component';
 
-describe('AppComponent', () => {
+fdescribe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AppComponent],
+      imports: [MatToolbarModule, AppComponent],
+      providers: [provideRouter([])],
     }).compileComponents();
   });
 
@@ -28,5 +31,19 @@ describe('AppComponent', () => {
     expect(compiled.querySelector('span')?.textContent).toContain(
       'Crud Angular / Spring'
     );
+  });
+
+  it('should render toolbar', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement;
+    expect(compiled.querySelector('mat-toolbar').textContent).toBeTruthy();
+  });
+
+  it('should render router-outlet', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement;
+    expect(compiled.querySelector('router-outlet')).toBeTruthy();
   });
 });
