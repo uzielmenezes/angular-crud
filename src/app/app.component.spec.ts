@@ -4,7 +4,7 @@ import { provideRouter } from '@angular/router';
 
 import { AppComponent } from './app.component';
 
-fdescribe('AppComponent', () => {
+describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [MatToolbarModule, AppComponent],
