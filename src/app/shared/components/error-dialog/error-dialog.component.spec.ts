@@ -1,4 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogModule,
+  MatDialogRef,
+} from '@angular/material/dialog';
 
 import { ErrorDialogComponent } from './error-dialog.component';
 
@@ -8,10 +13,22 @@ describe('ErrorDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [ErrorDialogComponent]
-})
-    .compileComponents();
+      declarations: [ErrorDialogComponent],
+      imports: [MatDialogModule],
+      providers: [
+        {
+          provide: MatDialogRef,
+          useValue: {},
+        },
+        {
+          provide: MAT_DIALOG_DATA,
+          useValue: 'Error message test.',
+        },
+      ],
+    }).compileComponents();
+  });
 
+  beforeEach(() => {
     fixture = TestBed.createComponent(ErrorDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -19,5 +36,15 @@ describe('ErrorDialogComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should open an error dialog with a message and a close button', () => {
+    const errorMessageDom = fixture.nativeElement.querySelector(
+      '.mat-dialog-content'
+    );
+    expect(errorMessageDom.textContent).toContain('Error message test.');
+
+    const okBtn = fixture.nativeElement.querySelector('button');
+    expect(okBtn.textContent).toContain('Close');
   });
 });
