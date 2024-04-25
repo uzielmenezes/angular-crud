@@ -13,7 +13,7 @@ describe('ErrorDialogComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [MatDialogModule],
+      imports: [MatDialogModule, ErrorDialogComponent],
       providers: [
         {
           provide: MatDialogRef,
