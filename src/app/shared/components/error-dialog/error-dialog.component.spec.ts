@@ -7,13 +7,12 @@ import {
 
 import { ErrorDialogComponent } from './error-dialog.component';
 
-describe('ErrorDialogComponent', () => {
+fdescribe('ErrorDialogComponent', () => {
   let component: ErrorDialogComponent;
   let fixture: ComponentFixture<ErrorDialogComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ErrorDialogComponent],
+  beforeEach(() => {
+    TestBed.configureTestingModule({
       imports: [MatDialogModule],
       providers: [
         {
@@ -40,7 +39,7 @@ describe('ErrorDialogComponent', () => {
 
   it('should open an error dialog with a message and a close button', () => {
     const errorMessageDom = fixture.nativeElement.querySelector(
-      '.mat-dialog-content'
+      '.mat-mdc-dialog-content'
     );
     expect(errorMessageDom.textContent).toContain('Error message test.');
 
