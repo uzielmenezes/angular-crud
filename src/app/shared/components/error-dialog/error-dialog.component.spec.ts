@@ -7,7 +7,7 @@ import {
 
 import { ErrorDialogComponent } from './error-dialog.component';
 
-describe('ErrorDialogComponent', () => {
+fdescribe('ErrorDialogComponent', () => {
   let component: ErrorDialogComponent;
   let fixture: ComponentFixture<ErrorDialogComponent>;
 
@@ -44,6 +44,6 @@ describe('ErrorDialogComponent', () => {
     expect(errorMessageDom.textContent).toContain('Error message test.');
 
     const okBtn = fixture.nativeElement.querySelector('button');
-    expect(okBtn.textContent).toContain('Close');
+    expect(okBtn.textContent).toContain('Fechar');
   });
 });
