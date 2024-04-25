@@ -7,10 +7,10 @@ describe('ConfirmationDialogComponent', () => {
   let component: ConfirmationDialogComponent;
   let fixture: ComponentFixture<ConfirmationDialogComponent>;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     const matDialogRefMock = jasmine.createSpyObj('MatDialogRef', ['close']);
 
-    TestBed.configureTestingModule({
+    await TestBed.configureTestingModule({
       imports: [ConfirmationDialogComponent],
       providers: [
         {
