@@ -7,7 +7,7 @@ import {
 
 import { ConfirmationDialogComponent } from './confirmation-dialog.component';
 
-fdescribe('ConfirmationDialogComponent', () => {
+describe('ConfirmationDialogComponent', () => {
   let component: ConfirmationDialogComponent;
   let fixture: ComponentFixture<ConfirmationDialogComponent>;
 
