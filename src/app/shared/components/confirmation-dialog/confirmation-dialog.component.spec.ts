@@ -21,7 +21,9 @@ fdescribe('ConfirmationDialogComponent', () => {
         { provide: MatDialogRef, useValue: matDialogRefMock },
       ],
     }).compileComponents();
+  });
 
+  beforeEach(() => {
     fixture = TestBed.createComponent(ConfirmationDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -31,7 +33,7 @@ fdescribe('ConfirmationDialogComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should open a dialog with a message and confirmation and deny buttons', () => {
+  it('should open a dialog with a message and confirm and cancel buttons', () => {
     const confirmationMessageDom = fixture.nativeElement.querySelector(
       '.mat-mdc-dialog-content'
     );
@@ -39,10 +41,28 @@ fdescribe('ConfirmationDialogComponent', () => {
       'Confirmation message test.'
     );
 
-    const okBtn = fixture.nativeElement.querySelectorAll('button')[0];
-    expect(okBtn.textContent).toContain('Sim');
+    const confirmBtn = fixture.nativeElement.querySelectorAll('button')[0];
+    expect(confirmBtn.textContent).toContain('Sim');
 
     const cancelBtn = fixture.nativeElement.querySelectorAll('button')[1];
     expect(cancelBtn.textContent).toContain('Não');
+  });
+
+  it('should close dialog with true result when clicking on confirm button', () => {
+    const confirmBtn = fixture.nativeElement.querySelectorAll('button')[0];
+    confirmBtn.click();
+    fixture.detectChanges();
+
+    const dialog = component.dialogRef;
+    expect(dialog.close).toHaveBeenCalledWith(true);
+  });
+
+  it('should close dialog with false result when clicking on cancel button', () => {
+    const cancelBtn = fixture.nativeElement.querySelectorAll('button')[1];
+    cancelBtn.click();
+    fixture.detectChanges();
+
+    const dialog = component.dialogRef;
+    expect(dialog.close).toHaveBeenCalledWith(false);
   });
 });
